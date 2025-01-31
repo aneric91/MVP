@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import de useNavigate
 import "../styles/InscriptionConnexion.css";
 
 const InscriptionConnexion = () => {
@@ -9,6 +10,8 @@ const InscriptionConnexion = () => {
   const [surface, setSurface] = useState("");
   const [step, setStep] = useState(1);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate(); // Initialisation du hook de navigation
 
   const regions = ["Cotonou", "Porto-Novo", "Parakou", "Abomey"];
   const surfaces = ["1-2 ha", "3-4 ha", "5+ ha"];
@@ -61,6 +64,11 @@ const InscriptionConnexion = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       console.log("Utilisateur inscrit :", userData);
       setStep(4);
+
+      // 🔥 Redirection automatique après 2 secondes
+      setTimeout(() => {
+        navigate("/plan-selection");
+      }, 2000);
     } catch (error) {
       setError("Erreur lors de l'inscription");
     }
@@ -76,8 +84,7 @@ const InscriptionConnexion = () => {
         <div>
           <div className="form-group">
             <label className="form-label">
-              Numéro de téléphone
-              <span className="required">*</span>
+              Numéro de téléphone<span className="required">*</span>
             </label>
             <input
               type="tel"
@@ -87,10 +94,7 @@ const InscriptionConnexion = () => {
               placeholder="Ex: +22967000000"
             />
           </div>
-          <button 
-            className="form-button"
-            onClick={handlePhoneSubmit}
-          >
+          <button className="form-button" onClick={handlePhoneSubmit}>
             Recevoir OTP
           </button>
         </div>
@@ -100,8 +104,7 @@ const InscriptionConnexion = () => {
         <div>
           <div className="form-group">
             <label className="form-label">
-              Code OTP
-              <span className="required">*</span>
+              Code OTP<span className="required">*</span>
             </label>
             <input
               type="text"
@@ -112,10 +115,7 @@ const InscriptionConnexion = () => {
               placeholder="Entrez le code reçu"
             />
           </div>
-          <button 
-            className="form-button"
-            onClick={handleOtpSubmit}
-          >
+          <button className="form-button" onClick={handleOtpSubmit}>
             Valider
           </button>
         </div>
@@ -125,8 +125,7 @@ const InscriptionConnexion = () => {
         <div>
           <div className="form-group">
             <label className="form-label">
-              Nom complet
-              <span className="required">*</span>
+              Nom complet<span className="required">*</span>
             </label>
             <input
               type="text"
@@ -139,8 +138,7 @@ const InscriptionConnexion = () => {
 
           <div className="form-group">
             <label className="form-label">
-              Région/Ville
-              <span className="required">*</span>
+              Région/Ville<span className="required">*</span>
             </label>
             <select
               className="form-select"
@@ -158,8 +156,7 @@ const InscriptionConnexion = () => {
 
           <div className="form-group">
             <label className="form-label">
-              Taille de l'exploitation
-              <span className="required">*</span>
+              Taille de l'exploitation<span className="required">*</span>
             </label>
             <select
               className="form-select"
@@ -175,10 +172,7 @@ const InscriptionConnexion = () => {
             </select>
           </div>
 
-          <button 
-            className="form-button"
-            onClick={handleFinalSubmit}
-          >
+          <button className="form-button" onClick={handleFinalSubmit}>
             S'inscrire
           </button>
         </div>
@@ -186,7 +180,7 @@ const InscriptionConnexion = () => {
 
       {step === 4 && (
         <div className="success-message">
-          <div>Inscription réussie !</div>
+          <div>✅ Inscription réussie !</div>
           <p>Vous allez être redirigé vers l'écran de choix du plan...</p>
         </div>
       )}
