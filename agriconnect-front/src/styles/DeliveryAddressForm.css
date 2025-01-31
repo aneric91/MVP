@@ -1,0 +1,101 @@
+.delivery-form-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .form-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-header .icon {
+    width: 28px;
+    height: 28px;
+    color: #047857;
+    margin-right: 10px;
+  }
+  
+  .form-header h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #065f46;
+  }
+  
+  .geo-button-container {
+    text-align: right;
+  }
+  
+  .geo-button {
+    display: flex;
+    align-items: center;
+    color: #047857;
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .geo-button .icon-small {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+  
+  .form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 4px;
+  }
+  
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: #10b981;
+    outline: none;
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.4);
+  }
+  
+  .form-group-row {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .submit-button {
+    width: 100%;
+    background: #047857;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background: #065f46;
+  }
+  

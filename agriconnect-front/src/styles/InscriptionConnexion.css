@@ -1,0 +1,121 @@
+.inscription-container {
+  max-width: 600px; /* Augmenté la largeur maximale */
+  margin: 0 auto;
+  padding: 30px; /* Ajouté un peu plus de padding */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* S'assurer que le modal est au-dessus des autres éléments */
+}
+
+.inscription-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #4CAF50; /* Vert agriculture */
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4CAF50; /* Ajouté le vert agriculture au focus */
+  box-shadow: 0 0 0 1px #4CAF50;
+}
+
+.form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #4CAF50; /* Ajouté le vert agriculture au focus */
+  box-shadow: 0 0 0 1px #4CAF50;
+}
+
+.form-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50; /* Vert agriculture pour le bouton */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-button:hover {
+  background-color: #388E3C; /* Une teinte plus foncée du vert */
+}
+
+.error-message {
+  color: #dc2626;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #fee2e2;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.success-message {
+  color: #059669;
+  text-align: center;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #d1fae5;
+  border-radius: 4px;
+}
+
+.required {
+  color: #dc2626;
+  margin-left: 4px;
+}
+
+/* Animations pour les transitions entre les étapes */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}
