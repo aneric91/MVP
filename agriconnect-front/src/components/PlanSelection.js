@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; 
 import '../styles/PlanSelection.css';
 
 const plans = [
@@ -8,8 +9,10 @@ const plans = [
 ];
 
 const PlanSelection = () => {
+  const navigate = useNavigate();
+
   const handleSelection = (planName) => {
-    alert(`Vous avez sélectionné le plan ${planName}`);
+    navigate(`/paiement?plan=${planName}`);
   };
 
   return (
@@ -18,7 +21,7 @@ const PlanSelection = () => {
         <h1 className="plans-title">Choisissez votre plan</h1>
         
         <div className="plans-grid">
-          {plans.map((plan, index) => (
+          {plans.map((plan) => (
             <div key={plan.name} className="plan-card">
               <div className="price-banner">
                 {plan.price}/mois
