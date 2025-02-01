@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Truck, Home, MapPin, X } from "lucide-react";
 import '../styles/DeliveryRequest.css';
-import DeliveryAddressForm from './DeliveryAddressForm'; // Importez le nouveau composant
+import DeliveryAddressForm from './DeliveryAddressForm'; 
 
 const DeliveryRequest = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [showAddressForm, setShowAddressForm] = useState(false); // Nouveau state
+  const [showAddressForm, setShowAddressForm] = useState(false);
 
   const handleOrderClick = () => {
     setShowPopup(true);
@@ -15,12 +15,11 @@ const DeliveryRequest = () => {
   const handleSelection = (option) => {
     setSelectedOption(option);
     setShowPopup(false);
-    setShowAddressForm(true); // Afficher le formulaire après la sélection
+    setShowAddressForm(true);
   };
 
   return (
     <div className="delivery-container">
-      {/* Header Section */}
       <div className="delivery-header">
         <h1 className="header-title">Demande de Livraison</h1>
         <p className="header-description">
@@ -28,7 +27,6 @@ const DeliveryRequest = () => {
         </p>
       </div>
 
-      {/* Main Content */}
       {!showAddressForm ? (
         <div className="delivery-card">
           <div className="card-content">
@@ -53,7 +51,6 @@ const DeliveryRequest = () => {
         />
       )}
 
-      {/* Popup Modal */}
       {showPopup && (
         <div className="modal-overlay">
           <div className="modal-content">

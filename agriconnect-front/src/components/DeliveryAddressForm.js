@@ -1,88 +1,6 @@
-// import React, { useState } from 'react';
-// import { MapPin, Navigation } from 'lucide-react';
-// import '../styles/DeliveryAddressForm.css'; // Import du CSS externe
-
-// const DeliveryAddressForm = () => {
-//   const [address, setAddress] = useState({
-//     street: '',
-//     city: '',
-//     region: '',
-//     phone: '',
-//     additionalInfo: ''
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setAddress(prev => ({
-//       ...prev,
-//       [name]: value
-//     }));
-//   };
-
-//   const handleGeolocation = () => {
-//     if (navigator.geolocation) {
-//       navigator.geolocation.getCurrentPosition(
-//         () => setUseGeolocation(true),
-//         (error) => alert("Erreur de géolocalisation: " + error.message)
-//       );
-//     }
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // Validation et soumission du formulaire
-//   };
-
-//   return (
-//     <div className="delivery-form-container">
-//       <div className="form-header">
-//         <MapPin className="icon" />
-//         <h2>Adresse de livraison</h2>
-//       </div>
-
-//       <form onSubmit={handleSubmit} className="form-content">
-//         <div className="geo-button-container">
-//           <button type="button" onClick={handleGeolocation} className="geo-button">
-//             <Navigation className="icon-small" />
-//             Utiliser ma position
-//           </button>
-//         </div>
-
-//         <div className="form-group">
-//           <label>Rue</label>
-//           <input type="text" name="street" value={address.street} onChange={handleChange} required />
-//         </div>
-
-//         <div className="form-group-row">
-//           <div className="form-group">
-//             <label>Ville</label>
-//             <input type="text" name="city" value={address.city} onChange={handleChange} required />
-//           </div>
-//           <div className="form-group">
-//             <label>Région</label>
-//             <input type="text" name="region" value={address.region} onChange={handleChange} required />
-//           </div>
-//         </div>
-
-//         <div className="form-group">
-//           <label>Téléphone</label>
-//           <input type="tel" name="phone" value={address.phone} onChange={handleChange} required />
-//         </div>
-
-//         <div className="form-group">
-//           <label>Instructions supplémentaires</label>
-//           <textarea name="additionalInfo" value={address.additionalInfo} onChange={handleChange} rows="3"></textarea>
-//         </div>
-
-//         <button type="submit" className="submit-button">Confirmer l'adresse</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default DeliveryAddressForm;
 import React, { useState } from 'react';
 import { MapPin, Navigation } from 'lucide-react';
+import '../styles/DeliveryAddressForm.css';
 
 const DeliveryAddressForm = ({ deliveryType, onBack }) => {
   const [address, setAddress] = useState({
@@ -107,7 +25,6 @@ const DeliveryAddressForm = ({ deliveryType, onBack }) => {
       setIsGeolocating(true);
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // Ici vous pourriez intégrer un service de géocodage inverse
           console.log(position.coords.latitude, position.coords.longitude);
           setIsGeolocating(false);
         },
@@ -121,13 +38,11 @@ const DeliveryAddressForm = ({ deliveryType, onBack }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Traitement du formulaire
     console.log('Adresse soumise:', address);
   };
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto">
-      {/* En-tête avec option de retour */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <MapPin className="w-6 h-6 text-green-600 mr-2" />
@@ -141,13 +56,11 @@ const DeliveryAddressForm = ({ deliveryType, onBack }) => {
         </button>
       </div>
 
-      {/* Type de livraison sélectionné */}
       <div className="mb-6 p-3 bg-green-50 rounded-lg">
         <p className="text-green-800">Mode sélectionné : {deliveryType}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Bouton de géolocalisation */}
         <div className="flex justify-end">
           <button
             type="button"
@@ -160,7 +73,6 @@ const DeliveryAddressForm = ({ deliveryType, onBack }) => {
           </button>
         </div>
 
-        {/* Champs du formulaire */}
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
