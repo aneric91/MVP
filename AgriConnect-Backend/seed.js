@@ -2,7 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Subscription = require('./models/Subscription');
 
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/agriculture';
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/agriconnect';
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("✅ Connecté à MongoDB"))

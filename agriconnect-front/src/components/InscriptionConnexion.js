@@ -1,3 +1,152 @@
+/*
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/InscriptionConnexion.css";
+
+const InscriptionConnexion = () => {
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [region, setRegion] = useState("");
+  const [surface, setSurface] = useState("");
+  const [step, setStep] = useState(1);
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  const regions = ["Cotonou", "Porto-Novo", "Parakou", "Abomey"];
+  const surfaces = [
+    { label: "1 ha", value: 1 },
+    { label: "2 ha", value: 2 },
+    { label: "3 ha", value: 3 },
+    { label: "4 ha", value: 4 },
+    { label: "5+ ha", value: 5 } // On considère 5+ ha comme 5 ha pour simplifier
+  ];  
+
+  const validatePhone = (phone) => {
+    const phoneRegex = /^\+?[0-9]{8,15}$/;
+    return phoneRegex.test(phone);
+  };
+
+  const handleSubmit = async () => {
+    setError("");
+    if (!validatePhone(phone) || !name || !region || !surface) {
+      setError("Veuillez remplir tous les champs obligatoires avec des données valides.");
+      return;
+    }
+  
+    const userData = {
+      phoneNumber: phone,
+      name,
+      region,
+      farmSize: surface // Envoyer un nombre
+    };
+  
+    try {
+      const response = await fetch("http://localhost:5000/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData)
+      });
+  
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error);
+  
+      console.log("Utilisateur inscrit :", result);
+      setStep(2);
+      setTimeout(() => navigate("/plan-selection"), 2000);
+    } catch (error) {
+      setError("Erreur lors de l'inscription");
+    }
+  };    
+
+  return (
+    <div className="inscription-container">
+      <h2 className="inscription-title">Inscription & Connexion</h2>
+
+      {error && <div className="error-message">{error}</div>}
+
+      {step === 1 && (
+        <div>
+          <div className="form-group">
+            <label className="form-label">
+              Numéro de téléphone<span className="required">*</span>
+            </label>
+            <input
+              type="tel"
+              className="form-input"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Ex: +22967000000"
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">
+              Nom complet<span className="required">*</span>
+            </label>
+            <input
+              type="text"
+              className="form-input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Votre nom complet"
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">
+              Région/Ville<span className="required">*</span>
+            </label>
+            <select
+              className="form-select"
+              value={region}
+              onChange={(e) => setRegion(e.target.value)}
+            >
+              <option value="">Sélectionner...</option>
+              {regions.map((reg) => (
+                <option key={reg} value={reg}>
+                  {reg}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">
+              Taille de l'exploitation<span className="required">*</span>
+            </label>
+            <select
+  className="form-select"
+  value={surface}
+  onChange={(e) => setSurface(Number(e.target.value))} // Convertir en nombre
+>
+  <option value="">Sélectionner...</option>
+  {surfaces.map((surf) => (
+    <option key={surf.value} value={surf.value}>
+      {surf.label}
+    </option>
+  ))}
+</select>
+          </div>
+
+          <button className="form-button" onClick={handleSubmit}>
+            S'inscrire
+          </button>
+        </div>
+      )}
+
+      {step === 2 && (
+        <div className="success-message">
+          <div>✅ Inscription réussie !</div>
+          <p>Vous allez être redirigé vers l'écran de choix du plan...</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default InscriptionConnexion;
+*/
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/InscriptionConnexion.css";

@@ -1,76 +1,88 @@
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Subscription = require('../models/Subscription');
-const axios = require('axios'); // Pour envoyer l'OTP via Interswitch
-const jwt = require('jsonwebtoken');
 
-// Envoi d'un OTP
-exports.sendOTP = async (req, res) => {
-    const { phoneNumber } = req.body;
-
-    if (!phoneNumber) {
-        return res.status(400).json({ error: "Numéro de téléphone requis" });
-    }
+exports.register = async (req, res) => {
+    let { phoneNumber, name, region, farmSize, address } = req.body;
 
     try {
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        await axios.post('https://api.interswitch.com/v3/otp/send', {
-            phoneNumber,
-            otp
+        // 🔹 Vérifier que les champs obligatoires sont bien remplis
+        if (!phoneNumber || !farmSize) {
+            return res.status(400).json({ error: "Numéro de téléphone et superficie sont obligatoires." });
+        }
+
+        // 🔹 Normalisation des entrées
+        phoneNumber = phoneNumber.trim();
+        name = name ? name.trim() : '';
+        region = region ? region.trim() : '';
+        address = address ? address.trim() : '';
+
+        // 🔹 Vérifier si l'utilisateur est déjà inscrit
+        let user = await User.findOne({ phoneNumber });
+        if (user) {
+            return res.status(400).json({ error: "Utilisateur déjà enregistré" });
+        }
+
+        // 🔹 Convertir `farmSize` en nombre
+        farmSize = Number(farmSize);
+        if (isNaN(farmSize) || farmSize <= 0) {
+            return res.status(400).json({ error: "Superficie invalide." });
+        }
+
+        // 🔹 Trouver l'abonnement correspondant
+        const subscription = await Subscription.findOne({
+            minSize: { $lte: farmSize },
+            maxSize: { $gte: farmSize }
         });
 
-        let user = await User.findOne({ phoneNumber });
-        if (!user) {
-            user = new User({ phoneNumber, otp });
-        } else {
-            user.otp = otp;
+        if (!subscription) {
+            return res.status(400).json({ error: "Aucun abonnement disponible pour cette superficie." });
         }
+
+        // 🔹 Créer un nouvel utilisateur
+        user = new User({
+            phoneNumber,
+            name,
+            region,
+            farmSize,
+            address,
+            subscription: subscription._id
+        });
+
         await user.save();
-        res.json({ message: "OTP envoyé", phoneNumber });
+
+        // 🔹 Générer un token JWT
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+        res.json({ message: "Inscription réussie", token, user });
     } catch (error) {
-        console.error("Erreur envoi OTP:", error);
-        res.status(500).json({ error: "Échec de l'envoi de l'OTP" });
+        console.error("Erreur lors de l'inscription:", error);
+        res.status(500).json({ error: "Échec de l'inscription" });
     }
 };
 
-// Vérification de l'OTP et inscription/connexion
-exports.verifyOTP = async (req, res) => {
-    const { phoneNumber, otp, name, region, farmSize, address } = req.body;
+// 🔹 Connexion d'un utilisateur existant
+exports.login = async (req, res) => {
+    let { phoneNumber } = req.body;
 
     try {
+        if (!phoneNumber) {
+            return res.status(400).json({ error: "Le numéro de téléphone est requis." });
+        }
+
+        phoneNumber = phoneNumber.trim();
+
         const user = await User.findOne({ phoneNumber });
-
-        if (!user || user.otp !== otp) {
-            return res.status(400).json({ error: "OTP invalide ou expiré" });
+        if (!user) {
+            return res.status(400).json({ error: "Utilisateur non trouvé" });
         }
 
-        // Mise à jour des infos utilisateur lors de l'inscription
-        if (!user.name) {
-            user.name = name;
-            user.region = region;
-            user.farmSize = farmSize;
-            user.address = address;
-
-            // Attribution automatique d'un abonnement
-            const subscription = await Subscription.findOne({
-                minSize: { $lte: farmSize },
-                maxSize: { $gte: farmSize }
-            });
-
-            if (!subscription) {
-                return res.status(400).json({ error: "Aucun abonnement disponible pour cette superficie." });
-            }
-
-            user.subscription = subscription._id;
-            user.paymentStatus = 'pending';
-        }
-
+        // 🔹 Générer un token JWT
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-        user.otp = null;
-        await user.save();
 
         res.json({ message: "Connexion réussie", token, user });
     } catch (error) {
-        console.error("Erreur vérification OTP:", error);
-        res.status(500).json({ error: "Échec de la vérification OTP" });
+        console.error("Erreur lors de la connexion:", error);
+        res.status(500).json({ error: "Échec de la connexion" });
     }
 };
