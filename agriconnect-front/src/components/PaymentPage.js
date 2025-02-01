@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+/* import { useLocation, useNavigate } from "react-router-dom";
 import { CreditCard, Smartphone, Phone } from "lucide-react";
-import "../styles/PaymentPage.css";
+import "../styles/PaymentPage.css"; */
 
-const PaymentModal = ({ isOpen, onClose, onSubmit }) => {
+/* const PaymentModal = ({ isOpen, onClose, onSubmit }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
@@ -122,6 +122,36 @@ const PaymentPage = () => {
       />
     </div>
   );
+}; */
+
+const PaymentPage = () => {
+  const [amount, setAmount] = useState(1500000);
+  const [txnRef, setTxnRef] = useState('');
+  useEffect(() => {
+    const randomTxnRef = 'txn_' + Math.random().toString(36).slice(2, 11);
+    setTxnRef(randomTxnRef);
+  }, []);
+  return (
+    <>
+    {/* J'ai mis tous les champs sensibles en hidden. seul le boutton de paiement s'affiche
+    Vous pouvez ajouter un style pour le background, le boutton et d'autres trucs */}
+      <form
+        method="post"
+        action="https://newwebpay.qa.interswitchng.com/collections/w/pay" >
+        <input type="hidden" name="merchant_code" value="MX6072" />
+        <input type="hidden" name="pay_item_id" value="9405967" />
+        <input
+          name="site_redirect_url"
+          value="http://localhost:5000/delivery-request"
+          type="hidden"
+        />
+        <input type="hidden"  name="txn_ref" value={txnRef} />
+        <input type="hidden" name="amount" value={amount} />
+        <input type="hidden" name="currency" value="566" />
+        <input type="submit" value="Validate Payment" />
+      </form>
+    </>
+  )
 };
 
 export default PaymentPage;
