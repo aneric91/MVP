@@ -15,9 +15,10 @@ const userSchema = new mongoose.Schema({
   farmSize: { type: Number, required: true },
   address: { type: String },
   otp: { type: String },
+  password: { type: String, required: true }, // 🔒 Nouveau champ pour le mot de passe
   subscription: { type: mongoose.Schema.Types.ObjectId, ref: 'Subscription', default: null },
   paymentHistory: [paymentHistorySchema],
-  balance: { type: Number, default: 0 } // 🔥 Nouveau champ pour stocker le solde
+  balance: { type: Number, default: 0 } // 🔥 Champ pour stocker le solde
 });
 
 module.exports = mongoose.model('User', userSchema);
