@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Truck, Home, MapPin, X } from "lucide-react";
 import '../styles/DeliveryRequest.css';
-import DeliveryAddressForm from './DeliveryAddressForm'; 
+import DeliveryAddressForm from './DeliveryAddressForm';
 
 const DeliveryRequest = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -21,9 +21,9 @@ const DeliveryRequest = () => {
   return (
     <div className="delivery-container">
       <div className="delivery-header">
-        <h1 className="header-title">Demande de Livraison</h1>
+        <h1 className="header-title">Delivery Request</h1>
         <p className="header-description">
-          Choisissez le mode de livraison qui vous convient le mieux pour recevoir vos intrants agricoles
+          Choose the delivery method that suits you best to receive your agricultural inputs.
         </p>
       </div>
 
@@ -34,19 +34,19 @@ const DeliveryRequest = () => {
               <Truck className="truck-icon" />
             </div>
             <p className="delivery-description">
-              Nous nous engageons à livrer vos produits dans les meilleurs délais
+              We are committed to delivering your products as quickly as possible.
             </p>
             <button
               onClick={handleOrderClick}
               className="order-button"
             >
-              Commander maintenant
+              Order Now
             </button>
           </div>
         </div>
       ) : (
-        <DeliveryAddressForm 
-          deliveryType={selectedOption} 
+        <DeliveryAddressForm
+          deliveryType={selectedOption}
           onBack={() => setShowAddressForm(false)}
         />
       )}
@@ -60,30 +60,30 @@ const DeliveryRequest = () => {
             >
               <X />
             </button>
-            
+
             <h2 className="modal-title">
-              Mode de livraison
+              Delivery Method
             </h2>
-            
+
             <div className="delivery-options">
               <button
                 className="delivery-option"
-                onClick={() => handleSelection("Livraison à domicile")}
+                onClick={() => handleSelection("Home Delivery")}
               >
                 <div className="option-content">
                   <Home className="option-icon" />
-                  <span className="option-text">Livraison à domicile</span>
+                  <span className="option-text">Home Delivery</span>
                 </div>
                 <span className="option-arrow">→</span>
               </button>
-              
+
               <button
                 className="delivery-option"
-                onClick={() => handleSelection("Récupérer en point relais")}
+                onClick={() => handleSelection("Pick up at Relay Point")}
               >
                 <div className="option-content">
                   <MapPin className="option-icon" />
-                  <span className="option-text">Point relais</span>
+                  <span className="option-text">Relay Point</span>
                 </div>
                 <span className="option-arrow">→</span>
               </button>

@@ -1,0 +1,80 @@
+/* Profil.css */
+.profile-container {
+    padding: 20px;
+    background: linear-gradient(to bottom right, #e9f5e9, #c8e6c9);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 10c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm30 0c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm-30 30c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm30 0c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5z' fill='%2381c784' fill-opacity='0.1'/%3E%3C/svg%3E");
+  }
+  
+  .profile-info {
+    margin-bottom: 20px;
+  }
+  
+  .payment-history table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .payment-history th, .payment-history td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .payment-history th {
+    background-color: #f2f2f2;
+  }
+  
+  .payment-history tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .buttons-container {
+    margin-top: 30px;
+  }
+  
+  .order-button, .plan-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin: 10px 0;
+  }
+  
+  .order-button:hover, .plan-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Nouveau code pour le bouton de déconnexion */
+  .logout-button-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .logout-button {
+    background-color: #81c784; /* Utilisation d'une couleur similaire à celle des autres boutons */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px; /* Même bordure que les autres boutons */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #66bb6a; /* Variation plus claire de la couleur */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(47, 133, 90, 0.2);
+  }
+  
+  .logout-button:active {
+    transform: translateY(0);
+  }
+  

@@ -1,0 +1,27 @@
+/* Login.css - Hérite des styles de base de Signup.css avec quelques modifications spécifiques */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #e9f5e9, #c8e6c9);
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Ajoute du style aux icônes React Icons */
+.icon {
+  margin-right: 8px;
+  color: #4CAF50; /* Vert agricole */
+  font-size: 18px;
+}
