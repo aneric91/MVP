@@ -14,7 +14,7 @@ const ConfirmationPage = () => {
       <button onClick={() => navigate("/delivery-request")} className="return-button">
         Delivery Request
       </button>
-    </div>
+    </div> 
   );
 };
 
