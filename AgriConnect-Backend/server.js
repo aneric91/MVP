@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const crypto = require('crypto');
+const axios = require('axios');
 
 const authMiddleware = require('./middlewares/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
@@ -26,6 +28,9 @@ app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/checkout', paymentRoutes);
 app.use('/subscriptions', subscriptionRoutes);
+
+const BASE_URL = 'https://qa.interswitchng.com/quicktellerservice/api/v5';
+const TERMINAL_ID = '3pbl0001';
 
 const updateUserBalance = async (user) => {
   const newBalance = user.paymentHistory.reduce((total, transaction) => {
