@@ -25,7 +25,7 @@ Assurez-vous d'avoir installé :
 
 3. **Lancer le serveur :**
     ```bash
-   npm start
+   node server.js
 
 Le serveur sera disponible sur http://localhost:5003.
 
