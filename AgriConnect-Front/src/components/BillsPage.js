@@ -30,7 +30,7 @@ const BillsPage = () => {
 
   // 1. Fetch biller categories on component mount
   useEffect(() => {
-    axios.get('http://localhost:3000/categories')
+    axios.get('http://localhost:5000/categories')
       .then(res => {
         if (res.data && res.data.BillerCategories) {
           setCategories(res.data.BillerCategories);
@@ -58,7 +58,7 @@ const BillsPage = () => {
     setShowBillers(false);
     setShowPaymentItems(false);
 
-    axios.get(`http://localhost:3000/billers/${categoryId}`)
+    axios.get(`http://localhost:5000/billers/${categoryId}`)
       .then(res => {
         console.log("Billers API Response:", res.data);
         if (!res.data || !res.data.BillerList || !Array.isArray(res.data.BillerList.Category)) {
@@ -101,7 +101,7 @@ const BillsPage = () => {
     // Fermer le menu des payment items s'il était ouvert
     setShowPaymentItems(false);
 
-    axios.get(`http://localhost:3000/biller/${billerId}/items`)
+    axios.get(`http://localhost:5000/biller/${billerId}/items`)
       .then(res => {
         console.log("Payment Items API Response:", res.data);
         if (res.data && res.data.PaymentItems) {
@@ -134,7 +134,7 @@ const BillsPage = () => {
       customerId,
       paymentCode: selectedPaymentItem.PaymentCode 
     };
-    axios.post('http://localhost:3000/validate-customer', payload)
+    axios.post('http://localhost:5000/validate-customer', payload)
       .then(res => {
         if (res.data.message) {
             alert(res.data.message);
@@ -167,7 +167,7 @@ const BillsPage = () => {
       customerEmail,
       amount
     };
-      axios.post('http://localhost:3000/bill-payment', payload)
+      axios.post('http://localhost:5000/bill-payment', payload)
       .then(res => {
         setPaymentResponse(res.data);
         console.log("Bill Payment Advice Response:", res.data);
