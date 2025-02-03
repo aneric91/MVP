@@ -131,6 +131,26 @@ const generateToken = async () => {
   }
 };
 
+app.get('/categories', async (req, res) => {
+  try {
+      const access_token = await generateToken();
+      console.log(access_token);
+      const response = await axios.get(`${BASE_URL}/services/categories`, {
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              Terminalid: TERMINAL_ID,
+              Authorization: `Bearer ${access_token}`,
+              'Cookie': 'BIGipServeruat_quickteller_service_pool=991173036.20480.0000'
+          }
+      });
+      /* console.log("categories: ", response.data); */
+      res.json(response.data);
+  } catch (error) {
+      console.error(error.response?.data || error.message);
+      res.status(500).json({ error: 'Erreur lors de la récupération des catégories' });
+  }
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Serveur en écoute sur le port ${PORT}`));
