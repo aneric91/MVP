@@ -217,5 +217,34 @@ app.post('/validate-customer', async (req, res) => {
   }
 });
 
+app.post('/bill-payment', async (req, res) => {
+  console.log("Bill payment body data: ", req.body);
+  const { paymentCode, customerId, customerMobile, customerEmail, amount } = req.body;
+  const transRef = "TXN" + crypto.randomBytes(6).toString("hex");
+
+  try {
+      const access_token = await generateToken();
+      const response = await axios.post(`${BASE_URL}/Transactions`, {
+          paymentCode,
+          customerId,
+          customerMobile,
+          customerEmail,
+          amount,
+          requestReference: transRef
+      }, {
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Terminalid': TERMINAL_ID,
+              'Authorization': `Bearer ${access_token}`
+          }
+      });
+      res.json(response.data);
+  } catch (error) {
+      console.error(error.response?.data || error.message);
+      res.status(500).json({ error: 'Erreur lors du paiement' });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Serveur en écoute sur le port ${PORT}`));
