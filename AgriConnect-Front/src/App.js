@@ -120,6 +120,7 @@ import DeliveryRequest from "./components/DeliveryRequest";
 import SignupPage from "./components/SignupPage";
 import LoginPage from "./components/LoginPage";
 import ProfilePage from "./components/ProfilPage";
+import BillsPage from "./components/BillsPage";
 import "./App.css";
 
 const ProtectedRoute = ({ children }) => {
@@ -141,6 +142,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/billspayment"
+              element={
+                <ProtectedRoute>
+                  <BillsPage />
                 </ProtectedRoute>
               }
             />
