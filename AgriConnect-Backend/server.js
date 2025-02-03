@@ -152,5 +152,25 @@ app.get('/categories', async (req, res) => {
   }
 });
 
+app.get('/billers/:categoryId', async (req, res) => {
+  const { categoryId } = req.params;
+  try {
+      const access_token = await generateToken();
+      const response = await axios.get(`${BASE_URL}/services?categoryId=${categoryId}`, {
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Terminalid': TERMINAL_ID,
+              'Authorization': `Bearer ${access_token}`
+          }
+      });
+      console.dir(response.data, { depth: null, colors: true });
+      res.json(response.data);
+  } catch (error) {
+      console.error(error.response?.data || error.message);
+      res.status(500).json({ error: 'Erreur lors de la récupération des billers' });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Serveur en écoute sur le port ${PORT}`));
