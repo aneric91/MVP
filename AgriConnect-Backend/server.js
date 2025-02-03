@@ -192,5 +192,30 @@ app.get('/biller/:billerId/items', async (req, res) => {
   }
 });
 
+app.post('/validate-customer', async (req, res) => {
+  const { CustomerId, PaymentCode } = req.body;
+  if (!CustomerId || !PaymentCode)
+      res.status(202).json({message: "Please the form fields!"});
+  try {
+      const access_token = await generateToken();
+      const response = await axios.post(`${BASE_URL}/Transactions/validatecustomers`, {
+          customers: [{ CustomerId, PaymentCode }],
+          "TerminalId": "3pbl",
+      }, 
+      {
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'TerminalId': TERMINAL_ID,
+              'Authorization': `Bearer ${access_token}`
+          }
+      });
+      res.json(response.data);
+  } catch (error) {
+      console.error(error.response?.data || error.message);
+      res.status(500).json({ error: 'Erreur lors de la validation du client' });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Serveur en écoute sur le port ${PORT}`));
