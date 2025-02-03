@@ -165,9 +165,6 @@ const ProfilePage = ({ onLogout }) => {
             <p><strong>Name:</strong> {user.name || "Not provided"}</p>
             <p><strong>Phone Number:</strong> {user.phoneNumber}</p>
             <p>
-              <strong>Email:</strong> {user.email ? user.email : "Not provided"}
-            </p>
-            <p>
               <strong>Subscription Plan:</strong> {user.subscription?.name || "Not set"}
             </p>
             {user.nextPaymentDate && (

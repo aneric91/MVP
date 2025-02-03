@@ -74,9 +74,12 @@ app.get('/user/balance', async (req, res) => {
   }
 });
 
+// Dans votre fichier serveur (ex: server.js ou routes/profileRoutes.js)
 app.get('/user/profile', authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-otp -__v');
+    const user = await User.findById(req.user.id)
+      .populate('subscription', 'name price minSize maxSize includes') // Peupler le plan d'abonnement avec les champs désirés
+      .select('-otp -__v'); // Exclure les champs sensibles inutiles
 
     if (!user) {
       return res.status(404).json({ error: "Utilisateur non trouvé" });
@@ -89,6 +92,24 @@ app.get('/user/profile', authMiddleware, async (req, res) => {
   }
 });
 
+app.post('/subscriptions/select', authMiddleware, async (req, res) => {
+  const { subscriptionId } = req.body;
+
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
+    }
+
+    user.subscription = subscriptionId;
+    await user.save();
+
+    res.json({ message: "Abonnement mis à jour", subscription: user.subscription });
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de l'abonnement :", error);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Serveur en écoute sur le port ${PORT}`));

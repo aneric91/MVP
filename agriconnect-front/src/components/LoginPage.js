@@ -77,8 +77,9 @@
 // };
 
 // export default LoginPage;
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
 import "../styles/Login.css";
 
 const LoginPage = () => {
@@ -87,6 +88,7 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleLogin = async () => {
     setError("");
@@ -104,14 +106,12 @@ const LoginPage = () => {
         body: JSON.stringify(loginData)
       });
       const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || "Login failed");
-      }
+      if (!response.ok) throw new Error(data.error || "Login failed");
 
-      // Stocker le token dans localStorage
-      localStorage.setItem("token", data.token);
+      login(data.token, data.user);
       console.log("Login successful:", data);
-      navigate("/dashboard");
+
+      navigate("/profile");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -132,10 +132,7 @@ const LoginPage = () => {
         
         <div className="form-container">
           <div className="form-group">
-            <label>
-              <i className="icon phone-icon"></i>
-              Phone Number*
-            </label>
+            <label><i className="icon phone-icon"></i> Phone Number*</label>
             <input
               type="tel"
               value={phone}
@@ -143,12 +140,8 @@ const LoginPage = () => {
               placeholder="Ex: +22967000000"
             />
           </div>
-
           <div className="form-group">
-            <label>
-              <i className="icon lock-icon"></i>
-              Password*
-            </label>
+            <label><i className="icon lock-icon"></i> Password*</label>
             <input
               type="password"
               value={password}
@@ -156,11 +149,9 @@ const LoginPage = () => {
               placeholder="Your password"
             />
           </div>
-
           <button className="submit-button" onClick={handleLogin} disabled={loading}>
             {loading ? "Logging in..." : "Log in"}
           </button>
-
           <div className="signup-link">
             Not a member yet? <a href="/signup">Sign up</a>
           </div>

@@ -187,51 +187,47 @@ const SignupPage = () => {
 
   const navigate = useNavigate();
   const regions = ["Cotonou", "Porto-Novo", "Parakou", "Abomey"];
-
-  const validatePhone = (phone) => /^\+?[0-9]{8,15}$/.test(phone);
-
+  // Pour surface, on envoie un nombre représentant la taille minimale, par exemple : 2 pour "1-2 ha", etc.
   const surfaces = [
     { label: "1-2 ha", value: 2 },
     { label: "3-4 ha", value: 4 },
     { label: "5+ ha", value: 5 }
   ];
-  
+
+  const validatePhone = (phone) => /^\+?[0-9]{8,15}$/.test(phone);
+
   const handleSubmit = async () => {
     setError("");
     if (!validatePhone(phone) || !name || !region || !surface || !password) {
       setError("Please fill in all required fields correctly.");
       return;
     }
-  
+
     setLoading(true);
     try {
       const response = await fetch("http://localhost:5000/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // Remarquez que le backend attend "phoneNumber" et "farmSize" pour surface\n
         body: JSON.stringify({ phoneNumber: phone, name, region, farmSize: surface, password })
       });
-      console.log({
-        phoneNumber: phone,
-        name,
-        region,
-        farmSize: surface,
-        password
-      });      
-  
+      
       const data = await response.json();
-      console.log(data);
-      if (!response.ok) throw new Error(data.message || "Registration failed");
-  
+      if (!response.ok) throw new Error(data.error || "Registration failed");
+      
+      // Stocker le token et mettre à jour l'authentification dans localStorage
       localStorage.setItem("token", data.token);
-      setStep(2);
-      setTimeout(() => navigate("/dashboard"), 2000);
+      localStorage.setItem("isAuthenticated", "true");
+      
+      //setStep(2);
+      window.location.reload();
+      //setTimeout(() => navigate("/profile"), 2000);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
     <div className="signup-container">
@@ -272,17 +268,14 @@ const SignupPage = () => {
             </div>
             
             <div className="form-group">
-  <label>Farm Size*</label>
-  <select value={surface} onChange={(e) => setSurface(Number(e.target.value))}>
-    <option value="">Select...</option>
-    {surfaces.map((surf) => (
-      <option key={surf.value} value={surf.value}>
-        {surf.label}
-      </option>
-    ))}
-  </select>
-</div>
-
+              <label>Farm Size*</label>
+              <select value={surface} onChange={(e) => setSurface(Number(e.target.value))}>
+                <option value="">Select...</option>
+                {surfaces.map((surf) => (
+                  <option key={surf.value} value={surf.value}>{surf.label}</option>
+                ))}
+              </select>
+            </div>
             
             <button className="submit-button" onClick={handleSubmit} disabled={loading}>
               {loading ? "Signing up..." : "Sign Up"}
@@ -305,3 +298,4 @@ const SignupPage = () => {
 };
 
 export default SignupPage;
+

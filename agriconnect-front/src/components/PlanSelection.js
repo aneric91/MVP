@@ -60,10 +60,10 @@
 //     </div>
 //   );
 // };
-
 // export default PlanSelection;
+
 import React from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import "../styles/PlanSelection.css";
 
 const plans = [
@@ -77,21 +77,35 @@ const PlanSelection = () => {
 
   const handleSelection = async (planName) => {
     try {
-      // Récupérer le token JWT depuis localStorage
       const token = localStorage.getItem("token");
-      if (!token) {
+      const user = JSON.parse(localStorage.getItem("user")); // Récupération correcte de l'objet user
+      
+      if (!token || !user || !user._id) {
         alert("You must be logged in to select a plan.");
         return;
       }
       
-      // Appeler le backend pour enregistrer l'abonnement sélectionné
+      const userId = user._id; // Extraction de l'ID utilisateur
+      
+      const subscriptionIds = {
+        "Basic": "679fd2a084bd383edbded181",
+        "Standard": "679fd2a084bd383edbded182",
+        "Premium": "679fd2a084bd383edbded183",
+      };
+      
+      const subscriptionId = subscriptionIds[planName];
+      if (!subscriptionId) {
+        alert("Invalid plan selected.");
+        return;
+      }
+      
       const response = await fetch("http://localhost:5000/subscriptions/choose", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ planName })
+        body: JSON.stringify({ userId, subscriptionId })
       });
       
       const data = await response.json();
@@ -107,7 +121,7 @@ const PlanSelection = () => {
       alert("Error selecting plan.");
     }
   };
-
+  
   return (
     <div className="plans-container">
       <div className="plans-wrapper">
