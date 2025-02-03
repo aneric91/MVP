@@ -111,5 +111,26 @@ app.post('/subscriptions/select', authMiddleware, async (req, res) => {
   }
 });
 
+const generateToken = async () => {
+  const options = {
+      method: 'POST',
+      url: 'https://passport.k8.isw.la/passport/oauth/token?grant_type=client_credentials',
+      headers: {
+          'Accept': 'application/json',
+          'Authorization': "Basic SUtJQTcyQzY1RDAwNUY5M0YzMEU1NzNFRkVBQzA0RkE2REQ5RTREMzQ0QjE6WVpNcVplenNsdHBTUE5iNCs0OVBHZVA3bFlrektuMWE1U2FWU3l6S09pST0=",
+          'Content-Type': 'application/x-www-form-urlencoded'
+      }
+  };
+
+  try {
+      const res = await axios.request(options);
+      return res.data.access_token;
+  } catch (error) {
+      console.error('Erreur lors de la génération du token:', error.response?.data || error.message);
+      throw error;
+  }
+};
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Serveur en écoute sur le port ${PORT}`));
