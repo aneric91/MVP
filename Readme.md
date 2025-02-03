@@ -1,4 +1,4 @@
-# AgriConnect-Backend
+# AgriConnect-Solution
 
 ## 📌 Présentation
 AgriConnect est une application mobile innovante conçue pour révolutionner l'accès aux intrants agricoles pour les petits exploitants en Afrique. Ce projet vise à surmonter les défis majeurs auxquels ces agriculteurs font face, notamment l'accès limité aux financements, la complexité des processus de prêt et les fluctuations imprévisibles des prix des intrants. Grâce à AgriConnect, nous souhaitons faciliter l'achat d'intrants agricoles en offrant des solutions de paiement flexibles et un système de souscription accessible.
