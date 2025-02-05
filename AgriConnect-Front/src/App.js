@@ -188,9 +188,9 @@ function App() {
             <Route
               path="/delivery-request"
               element={
-                <ProtectedRoute>
+                // <ProtectedRoute>
                   <DeliveryRequest />
-                </ProtectedRoute>
+                // {/* </ProtectedRoute> */}
               }
             />
             <Route path="*" element={<Navigate to="/login" replace />} />

@@ -10,7 +10,7 @@ router.post('/send-otp', sendOTP);
 router.post('/verify-otp-login', verifyOTPLogin); // Route pour la vérification OTP pour la connexion
 router.post('/verify-otp-register', verifyOTPRegister); // Route pour la vérification OTP pour l'inscription
 
-module.exports = router;*/
+module.exports = router;*/;
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
