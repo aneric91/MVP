@@ -9,9 +9,9 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch(err => console.error("❌ MongoDB connection error:", err));
 
     const plans = [
-        { name: "Basic", price: 10, minSize: 0, maxSize: 4, includes: "Fertilizer + Seeds" },
-        { name: "Standard", price: 20, minSize: 5, maxSize: 10, includes: "Fertilizer + Seeds + Pesticides" },
-        { name: "Premium", price: 30, minSize: 11, maxSize: 20, includes: "All inputs + Dedicated support" }
+        { name: "Basic", price: 10, minSize: 0, maxSize: 2, includes: "Fertilizer + Seeds" },
+        { name: "Standard", price: 20, minSize: 3, maxSize: 4, includes: "Fertilizer + Seeds + Pesticides" },
+        { name: "Premium", price: 30, minSize: 5, maxSize: 10, includes: "All inputs + Dedicated support" }
     ];    
 
 const seedDatabase = async () => {

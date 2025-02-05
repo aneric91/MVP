@@ -1,5 +1,5 @@
 require('dotenv').config();
-require('cron-job');
+require('./cron-job');
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -200,8 +200,6 @@ app.get('/biller/:billerId/items', async (req, res) => {
 
 app.post('/validate-customer', async (req, res) => {
   const { CustomerId, PaymentCode } = req.body;
-  if (!CustomerId || !PaymentCode)
-      res.status(202).json({message: "Please the form fields!"});
   try {
       const access_token = await generateToken();
       const response = await axios.post(`${BASE_URL}/Transactions/validatecustomers`, {

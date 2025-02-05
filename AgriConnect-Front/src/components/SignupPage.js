@@ -219,9 +219,8 @@ const SignupPage = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("isAuthenticated", "true");
       
-      //setStep(2);
-      window.location.reload();
-      //setTimeout(() => navigate("/profile"), 2000);
+      setStep(2);
+      setTimeout(() => navigate("/profile"), 2000);
     } catch (err) {
       setError(err.message);
     } finally {
